@@ -3,6 +3,7 @@
 
 import sys
 import getopt
+import bitarray
 
 def usage():
     print("Unicode Text Watermark Embedding Tool")
@@ -23,16 +24,18 @@ def main():
     global text_output
     global output_path
 
+    global watermark_bitstream
+    global text_string
 
-    if not len(sys.argv[1:]):
-        usage()
+    # if not len(sys.argv[1:]):
+        # usage()
     
     # Read from comand line
     try:
         opts, args = getopt.getopt(sys.argv[1:], "ht:f:T:F:", ["help", "text", "file", "TEXT", "FILE"])
     except getopt.GetoptError as err:
         print(err)
-        usage()
+        # usage()
 
     for o,a in opts:
         if o in ("-h", "--HELP"):
@@ -76,6 +79,31 @@ def main():
     # for i in duplicate_code:
     #     print(i)
     #print(text)
-    
+
+
+    # text_string = open(file_path, encoding='utf-8')
+    text_string = "abcd edsiugxxxeusrig rsigjsjgseigsli"
+    original_text = text_string
+    bitstream = b"01010010101010"
+    bit_addr = 0
+    txt_addr = 0
+    bit_len = len(bitstream)
+
+    while(txt_addr < len(text_string)):
+        for i in range(16):
+            if text_string[txt_addr] == original_code[i]:
+                print(text_string[txt_addr], original_code[i])
+                text_string = text_string.replace(text_string[txt_addr], duplicate_code[i])
+                bit_addr = bit_addr + 1
+        for i in range(8):
+            if text_string[txt_addr] == blank_space[i]:
+                print(text_string[txt_addr], blank_space[i])
+                text_string = text_string.replace(text_string[txt_addr], blank_space[i])
+                bit_addr = bit_addr + 3
+        print(bitstream[bit_addr%bit_len], bit_addr)                
+        txt_addr = txt_addr + 1
+
+    print(text_string)
+    print(original_text)
 #usage()
 main()
