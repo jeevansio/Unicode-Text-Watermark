@@ -5,16 +5,10 @@ import sys
 import getopt
 import bitarray
 
+
 def usage():
     print("Unicode Text Watermark Embedding Tool")
-    print("\n")
-    print("\n")
-    print("\n")
-    print("\n")    
-    print("\n")
-    print("\n")    
-    print("\n")
-    print("\n")
+    print("\n"*8)
 
 
 def main():
