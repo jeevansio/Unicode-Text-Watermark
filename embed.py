@@ -4,7 +4,26 @@
 import sys
 import getopt
 import bitarray
+import hmac
 
+
+#input: value='iloveu',key=(passwd)=(identification)=b'20173015',both type=bytes
+#output:type=str,len=128,eg='101010101...'
+def myhash(value,key):
+	hm = hmac.new(key,value)
+	wm = hm.hexdigest( ) 
+	print(wm)
+	#len=32,str,hex,eg"5157f56c40e7d4964bf9bca8e4fb9a63"
+	str=''
+	for i in range(len(wm)):
+		temp=bin(int((wm[i]),16))
+		temp=temp[2:]
+		lent=len(temp)
+		temp='0'*(4-lent)+temp
+		str=str+temp
+	#print(str)
+	#print(len(str))
+	return str
 
 def usage():
     print("Unicode Text Watermark Embedding Tool")
