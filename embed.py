@@ -12,7 +12,7 @@ import hmac
 def myhash(value,key):
 	hm = hmac.new(key,value)
 	wm = hm.hexdigest( ) 
-	print(wm)
+	#print(wm)
 	#len=32,str,hex,eg"5157f56c40e7d4964bf9bca8e4fb9a63"
 	str=''
 	for i in range(len(wm)):
@@ -95,8 +95,15 @@ def main():
 
 
     # text_string = open(file_path, encoding='utf-8')
-    text_string = "abcd edsiugxxxeusrig rsigjsjgseigsli"
-    original_text = text_string
+    f=open(r'D:\embed\test_embed.txt','rb')  #二进制读模式打开
+    r = f.read( )
+    original_text = text_string   
+    f.close()
+    watermark=myhash(r,passwd) #已经测试过这样可以得到正确的比特串，type=str,len=128
+	
+
+    #text_string = "abcd edsiugxxxeusrig rsigjsjgseigsli"
+
     bitstream = b"01010010101010"
     bit_addr = 0
     txt_addr = 0
