@@ -79,23 +79,23 @@ wm=wm*(count//128+1)
 
 
 
-
+text_string = list(text_string)
 for k in range(len(text_string)):
 	if text_string[k] in original_code:
 		print('find ch:%s'%(text_string[k]))
 		a=wm.pop()
 		if a == 1:
-			text_string = text_string.replace(text_string[k],duplicate_code2[text_string[k]])
+			text_string[k] = duplicate_code2[text_string[k]]
 		else:
 			continue
 	elif text_string[k] in blank_space:
 		print('find space:%s'%(text_string[k]))
 		a=wm.pop()+2*wm.pop()+4*wm.pop()
-		text_string = text_string.replace(text_string[k],blank_space[a])
+		text_string[k] = blank_space[a])
 		k+=2
 	else:
 		pass
-
+text_string = ''.join(text_string)
 f2=open('test_final.txt','w+',encoding='utf-8')
 f2.write(text_string)
 f2.close()
