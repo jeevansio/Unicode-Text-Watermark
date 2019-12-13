@@ -10,7 +10,26 @@
 import sys
 import getopt
 import bitarray
+import hmac
 
+
+#input: value='iloveu',key=(passwd)=(identification)=b'20173015',both type=bytes
+#output:type=str,len=128,eg='101010101...'
+def myhash(value,key):
+	hm = hmac.new(key,value)
+	wm = hm.hexdigest( ) 
+	#print(wm)
+	#len=32,str,hex,eg"5157f56c40e7d4964bf9bca8e4fb9a63"
+	str=''
+	for i in range(len(wm)):
+		temp=bin(int((wm[i]),16))
+		temp=temp[2:]
+		lent=len(temp)
+		temp='0'*(4-lent)+temp
+		str=str+temp
+	#print(str)
+	#print(len(str))
+	return str
 
 def usage():
     print("Unicode Text Watermark Embedding Tool")
@@ -82,6 +101,7 @@ def main():
     #                     Four-per-em space, Punctuation space, Thin space,
     #                     Narrow no-break space, Medium mathematical space.
 
+<<<<<<< HEAD
     blank_space = [ u"\u0020", u"\u2000", u"\u2004", 
                     u"\u2005", u"\u2008", u"\u2009",
                     u"\u202f", u"\u205f"]
@@ -99,6 +119,35 @@ def main():
     
     bit_addr = 0
     bit_len = len(bitstream)
+=======
+    blank_space = [u"\u0020", u"\u2000", u"\u2004", 
+                u"\u2005", u"\u2008", u"\u2009",
+                u"\u202f", u"\u205f"]
+
+
+    # for symbol in original_code:
+    #     print (symbol)
+    # for i in duplicate_code:
+    #     print(i)
+    #print(text)
+
+
+    # text_string = open(file_path, encoding='utf-8')
+    f=open(r'D:\embed\test_embed.txt','rb')  #二进制读模式打开
+    r = f.read( ) #bytes
+    text_string=r.decode('utf-8')     #string
+    original_text = text_string   
+    f.close()
+    watermark=myhash(r,passwd) #已经测试过这样可以得到正确的比特串，type=str,len=128
+	
+
+    #text_string = "abcd edsiugxxxeusrig rsigjsjgseigsli"
+    bitstream=watermark
+    #bitstream = b"01010010101010"
+    bit_addr = 0
+    txt_addr = 0
+    bit_len = len(bitstream)#128
+>>>>>>> 34deefd62ec342acad7a916706aa1ecd1eb9144a
 
     # scan string for confusable character or blank space
     for character in text_string:
