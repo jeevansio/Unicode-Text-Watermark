@@ -96,18 +96,19 @@ def main():
 
     # text_string = open(file_path, encoding='utf-8')
     f=open(r'D:\embed\test_embed.txt','rb')  #二进制读模式打开
-    r = f.read( )
+    r = f.read( ) #bytes
+    text_string=r.decode('utf-8')     #string
     original_text = text_string   
     f.close()
     watermark=myhash(r,passwd) #已经测试过这样可以得到正确的比特串，type=str,len=128
 	
 
     #text_string = "abcd edsiugxxxeusrig rsigjsjgseigsli"
-
-    bitstream = b"01010010101010"
+    bitstream=watermark
+    #bitstream = b"01010010101010"
     bit_addr = 0
     txt_addr = 0
-    bit_len = len(bitstream)
+    bit_len = len(bitstream)#128
 
     while(txt_addr < len(text_string)):
         for i in range(16):
