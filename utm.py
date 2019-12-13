@@ -62,9 +62,9 @@ def usage():
 
 # get a whitespace index from blank_space
 def getindex(str):
-	for i in range(len(blank_space)):
-		if blank_space[i] == str:
-			return i
+    for i in range(len(blank_space)):
+        if blank_space[i] == str:
+            return i
 
 # joint strings in list
 def magic(wm):
@@ -84,31 +84,32 @@ def embed(text_string, bitstream):
     chr_addr = 0
     bit_addr = 0
     bit_len = len(bitstream)
-    text_watermarked = text_string
-
+    text_watermarked = list(text_string)
+    print(len(text_string))
     # scan string for confusable character or blank space
-    while(chr_addr < len(text_watermarked)):
+    while(chr_addr < len(text_string)):
         # find a confusable character, read 1 bit from bitstream
         if text_watermarked[chr_addr] in original_code:
             print("confusable char: %s" %(text_watermarked[chr_addr]))
-            if(bitstream[bit_addr%bit_len] == "1"):
-                text_watermarked = text_watermarked.replace(text_watermarked[chr_addr], trans[text_watermarked[chr_addr]])
-            print(bitstream[bit_addr%bit_len], text_watermarked[chr_addr])
+            if(bitstream[bit_addr%bit_len] == '1'):
+                text_watermarked[chr_addr] = trans[text_watermarked[chr_addr]]
+            print(bit_addr, bitstream[bit_addr%bit_len], text_watermarked[chr_addr])
             bit_addr = bit_addr + 1
         # find a blank space, read 3 bits from bitstream
         elif text_watermarked[chr_addr] in blank_space:
             print("blank space: %s" %(text_watermarked[chr_addr]))
             # from bits to num
-            temp = 4*bitstream[bit_addr%bit_len] + 2*bitstream[(bit_addr+1)%bit_len] + bitstream[(bit_addr+2)%bit_len]
-            text_watermarked = text_watermarked.replace(text_watermarked[chr_addr], blank_space[temp])
+            temp = 4*int(bitstream[bit_addr%bit_len]) + 2*int(bitstream[(bit_addr+1)%bit_len]) + int(bitstream[(bit_addr+2)%bit_len])
+            text_watermarked[chr_addr] = blank_space[temp]
             bit_addr = bit_addr + 3
         else:
-            continue
+            bit_addr = bit_addr
+        print(chr_addr, bit_addr)
         chr_addr = chr_addr + 1
     
     print(text_string)
     print(text_watermarked)
-    return text_watermarked
+    return ''.join(text_watermarked)
 
 # watermark extraction
 def extract(text_watermarked):
@@ -116,10 +117,10 @@ def extract(text_watermarked):
     
     for ch in text_watermarked:
         if ch in blank_space:
-			print('find str:%s' %(ch))
-			index = getindex(ch) # int
-			index = getbinstr(index) # str,'000'~'111'
-			wm.append(index)
+            print("find str:%s"%(ch))
+            index = getindex(ch) # int
+            index = getbinstr(index) # str,'000'~'111'
+            wm.append(index)
         elif ch in original_code:
             wm.append('0')
         elif ch in duplicate_code:
@@ -180,7 +181,7 @@ def main():
     output_path = "watermarked_text.txt"
     # text_string = text_string.decode('utf-8')
     # text_string = "abcdedsiugxxxeusrigrxsixgjsxjgszznxaxcvrslkxxfodxxlxxi"
-    watermark = list("01")    
+    watermark = "01"    
     
     # read from file(read only mode)
     f = open(file_path, 'rb')
@@ -196,7 +197,7 @@ def main():
         f2.close()
     elif extraction:
         watermark_extracted = extract(text_string)
-        print(watermark_extracted)
+        print(''.join(watermark_extracted))
         # bitstram to hash
         #
         #
