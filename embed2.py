@@ -28,8 +28,6 @@ duplicate_code2={    u"\u002d":u"\u2010",u"\u003b":u"\u037e",
     				 u"\u0076":u"\u2174",u"\u0078":u"\u2179"}
 
 
-
-
 def myhash(value,key):
 	hm = hmac.new(key,value)
 	wm = hm.hexdigest( ) 
@@ -56,6 +54,8 @@ f=open('test_embed.txt','rb')  #读模式打开
 r = f.read( )   #bytes类型
 f.close()
 watermark=myhash(r,passwd)
+print(watermark)
+
 original_text=r.decode('utf-8') #string类型
 #print(original_text)
 f3=open('test_original.txt','w+')
@@ -74,40 +74,40 @@ count=0
 for ch in text_string:
 	count+=1
 wm=wm*(count//128+1)
-print(wm)
 
-for ch in text_string:
-	if ch in original_code:
-		print('find ch:%s'%(ch))
+
+
+
+
+
+for k in range(len(text_string)):
+	if text_string[k] in original_code:
+		print('find ch:%s'%(text_string[k]))
 		a=wm.pop()
 		if a == 1:
-			ch = duplicate_code2[ch]
+			text_string = text_string.replace(text_string[k],duplicate_code2[text_string[k]])
 		else:
 			continue
-	elif ch in blank_space:
-		print('find space:%s'%(ch))
+	elif text_string[k] in blank_space:
+		print('find space:%s'%(text_string[k]))
 		a=wm.pop()+2*wm.pop()+4*wm.pop()
-		ch = blank_space[a]
+		text_string = text_string.replace(text_string[k],blank_space[a])
+		k+=2
 	else:
-		continue
-#print(original_text)
-#print(text_string)
-f2=open('test_final.txt','w+')
+		pass
+
+f2=open('test_final.txt','w+',encoding='utf-8')
 f2.write(text_string)
 f2.close()
 
 
 
 
-'''test tips:
-1.prepare a folder
-         |___embed.py
-         |___test_embed.txt(the original text )
-2.after runnig embed.py
-you get new files
-         |___embed.py
-         |___test_embed.txt(the original text )
-         |___test_original.txt(backup,备份)
-         |___test_final.txt
+
+
+
+
+
+
 
 
