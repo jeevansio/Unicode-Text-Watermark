@@ -91,7 +91,7 @@ for k in range(len(text_string)):
 	elif text_string[k] in blank_space:
 		print('find space:%s'%(text_string[k]))
 		a=wm.pop()+2*wm.pop()+4*wm.pop()
-		text_string[k] = blank_space[a])
+		text_string[k] = blank_space[a]
 		k+=2
 	else:
 		pass
