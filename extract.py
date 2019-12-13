@@ -1,7 +1,5 @@
 #author:ly
 #function:extract wm
-#note that this doesn't worl,the output wm is 00000... which is obviously wrong
-#I doubt that is due to the type error when transforming and I'm trying to fix it,welcome solutions
 
 from functools import reduce
 
@@ -28,9 +26,12 @@ def getbinstr(num):
 	num=num[2:]#->'0'
 	lenn=len(num)
 	num='0'*(3-lenn)+num#'000'
+	print(num)
 	return num
+
+
 def magic(wm):
-	wm=reduce(lambda x,y:x+y,wm)#wm=['0110']
+	wm=reduce(lambda x,y:x+y,wm)#wm='0110'
 	return wm
 
 f=open('test_final.txt','rb')  #读模式打开
@@ -41,21 +42,28 @@ extract_org=r.decode('utf-8') #string类型
 
 
 
-wm=['']#初始化，其实128个元素就够了
+wm=['']#初始化，其实128个bit！！！！就够了，注意不是len(wm)
 
-for ch in extract_org:
-	if len(wm)<128:
-		if ch in blank_space:
-			print('find str:%s'%(ch))
-			index=getindex(ch)#int
+for m in range(len(extract_org)):
+	lenb=len(magic(wm))
+	print('lebwm=%d'%(lenb))
+	print(extract_org[m])
+	if lenb<128:
+		if extract_org[m] in blank_space:
+			print('find space:%s'%(extract_org[m]))
+			index=getindex(extract_org[m])#int
+			print(index)
 			index=getbinstr(index)#str,'000'~'111'
 			wm.append(index)
+			m+=2
 			#for j in range(3):
 				#wm.append(index[j])
-		elif (ch in original_code) | (ch in duplicate_code):
-			if ch in original_code:
+		elif (extract_org[m] in original_code) | (extract_org[m] in duplicate_code):
+			if extract_org[m] in original_code:
+				print('wm=0')
 				wm.append('0')
 			else:
+				print('wm=1')
 				wm.append('1')
 		else:
 			continue
@@ -64,9 +72,8 @@ for ch in extract_org:
 
 wm.reverse()#eg,wm=['0','110']
 wm=magic(wm)
+print(len(wm))
 print(wm)
-
-
 
 
 
