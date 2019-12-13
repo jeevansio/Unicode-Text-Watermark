@@ -86,7 +86,7 @@ for ch in text_string:
 			continue
 	elif ch in blank_space:
 		print('find space:%s'%(ch))
-		a=wm.pop()+2*wm.pop()+4*wm.pop()-1
+		a=wm.pop()+2*wm.pop()+4*wm.pop()
 		ch = blank_space[a]
 	else:
 		continue
