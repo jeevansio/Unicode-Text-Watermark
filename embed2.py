@@ -2,9 +2,9 @@
 # confusable symbols: -, ;, C, D, K, L, M, V,
 #                     X, c, d, i, j, l, v, s.
 #此代码实现utf-8，而暂不先考虑文本用其他编码
-#author:ly
-#实现水印嵌入
+#ly
 
+#import chardet
 import hmac
 
 passwd=b'20173015'
@@ -26,6 +26,9 @@ duplicate_code2={    u"\u002d":u"\u2010",u"\u003b":u"\u037e",
     				 u"\u0064":u"\u217e",u"\u0069":u"\u2170",
     				 u"\u006a":u"\u0458",u"\u006c":u"\u217c",
     				 u"\u0076":u"\u2174",u"\u0078":u"\u2179"}
+
+
+
 
 def myhash(value,key):
 	hm = hmac.new(key,value)
@@ -49,12 +52,16 @@ blank_space = [u"\u0020", u"\u2000", u"\u2004",
                 u"\u202f", u"\u205f"]
 
 
-f=open(r'D:\embed\test_embed.txt','rb')  #读模式打开
+f=open('test_embed.txt','rb')  #读模式打开
 r = f.read( )   #bytes类型
 f.close()
 watermark=myhash(r,passwd)
 original_text=r.decode('utf-8') #string类型
 #print(original_text)
+f3=open('test_original.txt','w+')
+f3.write(original_text)
+f3.close()
+
 text_string=original_text
 
 wm=list(watermark)
@@ -83,15 +90,24 @@ for ch in text_string:
 		ch = blank_space[a]
 	else:
 		continue
-print(original_text)
-print(text_string)
+#print(original_text)
+#print(text_string)
+f2=open('test_final.txt','w+')
+f2.write(text_string)
+f2.close()
 
 
 
 
-
-
-
-
+'''test tips:
+1.prepare a folder
+         |___embed.py
+         |___test_embed.txt(the original text )
+2.after runnig embed.py
+you get new files
+         |___embed.py
+         |___test_embed.txt(the original text )
+         |___test_original.txt(backup,备份)
+         |___test_final.txt
 
 
