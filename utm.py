@@ -55,12 +55,13 @@ def usage():
     print("Unicode Text Watermark Embedding Tool")
     print("----- Made By -----")
     print("Usage:")
-    print("-h, --help:      View tool's manual.")
     print("-e, --embed:     Embed watermark.")
-    print("-x, --extract:   Extract watermark.")
+    print("-h, --help:      View tool's manual.")
     print("-i, --input:     File to process.")
-    print("-o, --output:    Save file to...")
-    print("-k, --key:       Key to generate watermark.")
+    print("-k, --key:       Key to generate watermark.")    
+    print("-o, --output:    Save file to...")    
+    print("-v, --help:      Please input Identity ID to verify.")
+    print("-x, --extract:   Extract watermark.")
     print("----------- End of Manual -----------")
 
 # get a whitespace index from blank_space
