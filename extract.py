@@ -26,7 +26,7 @@ def getbinstr(num):
 	num=num[2:]#->'0'
 	lenn=len(num)
 	num='0'*(3-lenn)+num#'000'
-	print(num)
+	#print(num)
 	return num
 
 
@@ -45,35 +45,38 @@ extract_org=r.decode('utf-8') #string类型
 wm=['']#初始化，其实128个bit！！！！就够了，注意不是len(wm)
 
 for m in range(len(extract_org)):
-	lenb=len(magic(wm))
-	print('lebwm=%d'%(lenb))
-	print(extract_org[m])
-	if lenb<128:
+	#lenb=len(magic(wm))
+	#print('lebwm=%d'%(lenb))
+	#print(extract_org[m])
+	#if lenb<130:
 		if extract_org[m] in blank_space:
-			print('find space:%s'%(extract_org[m]))
+			#print('find space:%s'%(extract_org[m]))
 			index=getindex(extract_org[m])#int
-			print(index)
+			#print(index)
 			index=getbinstr(index)#str,'000'~'111'
 			wm.append(index)
-			m+=2
+			#m+=2
 			#for j in range(3):
 				#wm.append(index[j])
 		elif (extract_org[m] in original_code) | (extract_org[m] in duplicate_code):
 			if extract_org[m] in original_code:
-				print('wm=0')
+				#print('wm=0')
 				wm.append('0')
 			else:
-				print('wm=1')
+				#print('wm=1')
 				wm.append('1')
 		else:
 			continue
-	else:
-		break
+	#else:
+		#break
 
 wm.reverse()#eg,wm=['0','110']
 wm=magic(wm)
-print(len(wm))
-print(wm)
+wm2=wm[len(wm)-128:]
+print(len(wm2))
+print(wm2)
+
+
 
 
 
