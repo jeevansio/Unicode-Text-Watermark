@@ -11,6 +11,8 @@ import sys
 import getopt
 import hmac
 
+from functools import reduce
+
 embedment = 0
 extraction = 0
 file_path = "original_text.txt"
@@ -58,7 +60,15 @@ blank_space = [ u"\u0020", u"\u2000", u"\u2004",
 
 def usage():
     print("Unicode Text Watermark Embedding Tool")
-    print("\n"*8)
+    print("----- Made By -----")
+    print("Usage:")
+    print("-h, --help:      View tool's manual.")
+    print("-e, --embed:     Embed watermark.")
+    print("-x, --extract:   Extract watermark.")
+    print("-i, --input:     File to process.")
+    print("-o, --output:    Save file to...")
+    print("-k, --key:       Key to generate watermark.")
+    print("----------- End of Manual -----------")
 
 # get a whitespace index from blank_space
 def getindex(str):
@@ -186,7 +196,7 @@ def main():
     text_string = f.read()
     f.close()
     text_string = text_string.decode('utf-8')
-    watermark = myhash(text_string, key)
+    watermark = hash(text_string, key)
 
     if embedment:
         text_watermarked = embed(text_string, watermark)
@@ -195,10 +205,13 @@ def main():
         f2.close()
     elif extraction:
         watermark_extracted = extract(text_string)
-        print(''.join(watermark_extracted))
+        watermark_extracted = ''.join(watermark_extracted)
+        print(watermark_extracted)
         # bitstram to hash
         #
         #
+    else:
+        print("unknown operation.")
     
 
 main()
