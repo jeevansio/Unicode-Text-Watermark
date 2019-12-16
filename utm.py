@@ -95,30 +95,30 @@ def embed(text_string, bitstream):
     bit_addr = 0
     bit_len = len(bitstream)
     text_watermarked = list(text_string)
-    print(len(text_string))
+    # print(len(text_string))
     # scan string for confusable character or blank space
     while(chr_addr < len(text_string)):
         # find a confusable character, read 1 bit from bitstream
         if text_watermarked[chr_addr] in original_code:
-            print("confusable char: %s" %(text_watermarked[chr_addr]))
+            # print("confusable char: %s" %(text_watermarked[chr_addr]))
             if(bitstream[bit_addr%bit_len] == '1'):
                 text_watermarked[chr_addr] = trans[text_watermarked[chr_addr]]
-            print(bit_addr, bitstream[bit_addr%bit_len], text_watermarked[chr_addr])
+            # print(bit_addr, bitstream[bit_addr%bit_len], text_watermarked[chr_addr])
             bit_addr = bit_addr + 1
         # find a blank space, read 3 bits from bitstream
         elif text_watermarked[chr_addr] in blank_space:
-            print("blank space: %s" %(text_watermarked[chr_addr]))
+            # print("blank space: %s" %(text_watermarked[chr_addr]))
             # from bits to num
             temp = 4*int(bitstream[bit_addr%bit_len]) + 2*int(bitstream[(bit_addr+1)%bit_len]) + int(bitstream[(bit_addr+2)%bit_len])
             text_watermarked[chr_addr] = blank_space[temp]
             bit_addr = bit_addr + 3
         else:
             bit_addr = bit_addr
-        print(chr_addr, bit_addr)
+        # print(chr_addr, bit_addr)
         chr_addr = chr_addr + 1
     
-    print(text_string)
-    print(text_watermarked)
+    # print(text_string)
+    # print(''.join(text_watermarked))
     return ''.join(text_watermarked)
 
 # watermark extraction
@@ -127,7 +127,7 @@ def extract(text_watermarked):
     
     for ch in text_watermarked:
         if ch in blank_space:
-            print("find str:%s"%(ch))
+            # print("find str:%s"%(ch))
             index = getindex(ch) # int
             index = getbinstr(index) # str,'000'~'111'
             wm.append(index)
@@ -138,8 +138,8 @@ def extract(text_watermarked):
         else:
             continue
 
-    print("\n")
-    print(wm)
+    # print("\n")
+    # print(wm)
     return wm
 
 def hash(value, key):
@@ -196,10 +196,13 @@ def main():
     text_string = f.read()
     f.close()
     text_string = text_string.decode('utf-8')
-    watermark = hash(text_string, key)
+    key = key.encode('utf-8')
+    text = text_string.encode('utf-8')
+    watermark = hash(text, key)
 
     if embedment:
         text_watermarked = embed(text_string, watermark)
+        print(watermark)
         f2 = open(output_path, 'w+', encoding='utf-8')
         f2.write(text_watermarked)
         f2.close()
