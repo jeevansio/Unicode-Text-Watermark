@@ -40,14 +40,7 @@ trans = {   u"\u002d": u"\u2010", u"\u003b": u"\u037e",
             u"\u006a": u"\u0458", u"\u006c": u"\u217c",
             u"\u0076": u"\u2174", u"\u0078": u"\u2179"}
 
-# detrans = { u"\u2010": u"\u002d", u"\u037e": u"\u003b",
-#             u"\u216d": u"\u0043", u"\u216e": u"\u0044",
-#             u"\u212a": u"\u004b", u"\u216c": u"\u004c",
-#             u"\u216f": u"\u004d", u"\u2164": u"\u0056",
-#             u"\u2169": u"\u0058", u"\u217d": u"\u0063",
-#             u"\u217e": u"\u0064", u"\u2170": u"\u0069",
-#             u"\u0458": u"\u006a", u"\u217c": u"\u006c",
-#             u"\u2174": u"\u0076", u"\u2179": u"\u0078"}
+
 
 # whitespace symbols: Space, En quad, Three-per-em space,
 #                     Four-per-em space, Punctuation space, Thin space,
@@ -81,7 +74,7 @@ def magic(wm):
 	wm = reduce(lambda x, y:x+y , wm) # wm = ['0110']
 	return wm
 
-# decimal to binary
+# decimal to binary string
 def getbinstr(num):
 	num = bin(num)  # 0->'0b0', str
 	num = num[2:]   #  ->'0'
