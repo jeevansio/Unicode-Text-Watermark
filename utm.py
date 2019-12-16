@@ -13,8 +13,8 @@ import hmac
 
 embedment = 0
 extraction = 0
-file_path = ""
-output_path = ""
+file_path = "original_text.txt"
+output_path = "watermarked_text.txt"
 
 # confusable symbols: -, ;, C, D, K, L, M, V,
 #                     X, c, d, i, j, l, v, s.
@@ -177,18 +177,16 @@ def main():
             print("Unhandled Option")
 
     # temporary settings for test purpose
-    file_path = "original_text.txt"
-    output_path = "watermarked_text.txt"
     # text_string = text_string.decode('utf-8')
     # text_string = "abcdedsiugxxxeusrigrxsixgjsxjgszznxaxcvrslkxxfodxxlxxi"
-    watermark = "01"    
+      
     
     # read from file(read only mode)
     f = open(file_path, 'rb')
     text_string = f.read()
     f.close()
     text_string = text_string.decode('utf-8')
-
+    watermark = myhash(text_string, key)
 
     if embedment:
         text_watermarked = embed(text_string, watermark)
