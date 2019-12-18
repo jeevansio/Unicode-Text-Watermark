@@ -22,7 +22,7 @@ def issame(str1,str2):
 #输入位数<128
 lent=len(test)#eg.63
 a=math.floor(math.log(lent,2))#向下取整,5
-split=lent;#分片大小，比较的基本单元,63,2^^5,2^^4,2^^3,2^^2,2^^1
+split=lent;#分片大小，比较的基本单元,63,2^^5,2^^4,2^^3,2^^2
 #count_sum=0#一种分片下，比较的总次数
 result=0#输出的比率
 
