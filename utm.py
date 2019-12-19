@@ -55,16 +55,19 @@ blank_space = [ u"\u0020", u"\u2000", u"\u2004",
 
 def usage():
     print("Unicode Text Watermark Embedding Tool")
-    print("----- Made By -----")
+    print("----- MADE BY evan, ly, fzy, cyl -----")
     print("Usage:")
-    print("-e, --embed:     Embed watermark.")
     print("-h, --help:      View tool's manual.")
+    print("-e, --embed:     Embed watermark.")
+    print("-x, --extract:   Extract watermark.")
+    print("-c, --compare:   Compare watermark with hash value.")
     print("-i, --input:     File to process.")
     print("-k, --key:       Key to generate watermark.")    
     print("-o, --output:    Save file to...")    
-    print("-v, --help:      Please input Identity ID to verify.")
-    print("-x, --extract:   Extract watermark.")
-    print("----------- End of Manual -----------")
+    print("\n")
+    print("View source codes here:")
+    print("https://github.com/jeevansio/Unicode-Text-Watermark")
+    print("------------ End of Manual ------------")
 
 # get a whitespace index from blank_space
 def getindex(str):
@@ -194,7 +197,8 @@ def main():
             wm = a
         else:
             # assert False, "Unhanded Option"
-            print("Unhandled Option")
+            print("Unhandled Option. Checking out the manual.")
+            usage()
 
     # temporary settings for test purpose
     # text_string = text_string.decode('utf-8')
