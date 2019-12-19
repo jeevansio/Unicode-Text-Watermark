@@ -210,10 +210,10 @@ def main():
     text_string = f.read()
     f.close()
     text_string = text_string.decode('utf-8')
-    key = key.encode('utf-8')
     text = text_string.encode('utf-8')
 
     if embedment:
+        key = key.encode('utf-8')
         (watermark, hash_value) = hash(text, key)
         text_watermarked = embed(text_string, watermark)
         print("watermark sequence: %s" %(watermark))
@@ -225,13 +225,21 @@ def main():
         watermark_extracted = extract(text_string)
         watermark_extracted = ''.join(watermark_extracted)
         wm = str2bin(wm)
-        print(wm)
         if comparasion:
-            if watermark_extracted.find(wm) == -1:
+            wm2 = wm + wm
+            for i in range(0, 127):
+                a = watermark_extracted.find(wm2[i:(i+127)])
+                if a != -1:
+                    break
+            if a == -1:
+                print(watermark_extracted)
+                print(wm)
                 result = cmp_wm(wm, watermark_extracted)
             else:
-                result = 100
-            print("similarity: %d" %(result))
+                print(watermark_extracted)
+                print(wm)
+                result = 1
+            print("similarity: %d%%" %(result*100))
         else:
             print(watermark_extracted)
         # bitstram to hash
