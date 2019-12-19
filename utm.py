@@ -224,8 +224,8 @@ def main():
     elif extraction:
         watermark_extracted = extract(text_string)
         watermark_extracted = ''.join(watermark_extracted)
-        wm = str2bin(wm)
         if comparasion:
+            wm = str2bin(wm)
             wm2 = wm + wm
             for i in range(0, 127):
                 a = watermark_extracted.find(wm2[i:(i+127)])

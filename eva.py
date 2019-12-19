@@ -30,6 +30,8 @@ def issame(str1,str2):
 		return 0
 
 def cmp_wm(wm, test):
+	a=80
+	test=wm[a:]
 	#输入位数<128
 	lent=len(test)#eg.63
 	a=math.floor(math.log(lent,2))#向下取整
