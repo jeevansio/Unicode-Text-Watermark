@@ -78,7 +78,7 @@ def xor_bin(str1, str2):
 		for i in range(0, len(str1)-1):
 			if str1[i] == str2[i]:
 				count += 1
-		return count/len(str1)
+		return count
 	else:
 		return 1000
 
@@ -95,20 +95,19 @@ def cmp_wm_t(wm, test):
 		for j in range(0, len_t-128):
 			for i in range(0, len_w - 1):
 				m = xor_bin(wm2[i:i+128], test[j:j+128])
-				if m >= n:
-					n = m
-			if n >= p:
-				p = n
-		return p
+				n = max(n, m)
+			p = max(p, n)
+		p = p/(len_w-1)
 	else:
 		for i in range(0, len_w-1):
 			n = xor_bin(wm2[i:(i+len_t)], test)
-			if n >= p:
-				p = n	
-		result1 = p
-		result2 = cmp_wm(wm, test)
-		result = max(result1, result2)
-		return result
+			p = max(p, n)
+		p = p/len_w
+	result1 = p
+	result2 = cmp_wm(wm, test)
+	result = max(result1, result2)
+	print(result1, result2)
+	return result
 
 
 
