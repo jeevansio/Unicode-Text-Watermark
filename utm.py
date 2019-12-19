@@ -12,9 +12,11 @@ import getopt
 import hmac
 
 from functools import reduce
+from eva import cmp_wm
 
 embedment = 0
 extraction = 0
+comparasion = 0
 file_path = "original_text.txt"
 output_path = "watermarked_text.txt"
 
@@ -136,6 +138,16 @@ def extract(text_watermarked):
     # print(wm)
     return wm
 
+def str2bin(s):
+    str = ''
+    for i in range(len(s)):
+        temp = bin(int((s[i]), 16))
+        temp = temp[2:]
+        lent = len(temp)
+        temp = '0'*(4-lent) + temp
+        str = str + temp
+    return str
+
 def hash(value, key):
 	hm = hmac.new(key, value)
 	wm = hm.hexdigest( ) 
@@ -146,19 +158,20 @@ def hash(value, key):
 		lent = len(temp)
 		temp = '0'*(4-lent) + temp
 		str = str + temp
-	return str
+	return (str, wm)
 
 def main():
     global file_path
     global output_path
     global embedment
     global extraction
+    global comparasion
     # if not len(sys.argv[1:]):
         # usage()
     
     # Read from comand line
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hexi:o:k:", ["help", "embed", "extract", "input", "output", "key"])
+        opts, args = getopt.getopt(sys.argv[1:], "hexi:o:k:c:", ["help", "embed", "extract", "input", "output", "key", "compare"])
     except getopt.GetoptError as err:
         print(err)
         # usage()
@@ -175,7 +188,10 @@ def main():
         elif o in ("-o", "--output"):
             output_path = a
         elif o in ("-k", "--key"):
-            key = a        
+            key = a
+        elif o in ("-c", "--compare"):
+            comparasion = 1
+            wm = a
         else:
             # assert False, "Unhanded Option"
             print("Unhandled Option")
@@ -192,18 +208,28 @@ def main():
     text_string = text_string.decode('utf-8')
     key = key.encode('utf-8')
     text = text_string.encode('utf-8')
-    watermark = hash(text, key)
 
     if embedment:
+        (watermark, hash_value) = hash(text, key)
         text_watermarked = embed(text_string, watermark)
-        print(watermark)
+        print("watermark sequence: %s" %(watermark))
+        print("hash value: %s" %(hash_value))
         f2 = open(output_path, 'w+', encoding='utf-8')
         f2.write(text_watermarked)
         f2.close()
     elif extraction:
         watermark_extracted = extract(text_string)
         watermark_extracted = ''.join(watermark_extracted)
-        print(watermark_extracted)
+        wm = str2bin(wm)
+        print(wm)
+        if comparasion:
+            if watermark_extracted.find(wm) == -1:
+                result = cmp_wm(wm, watermark_extracted)
+            else:
+                result = 100
+            print("similarity: %d" %(result))
+        else:
+            print(watermark_extracted)
         # bitstram to hash
         #
         #
