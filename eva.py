@@ -30,8 +30,8 @@ def issame(str1,str2):
 		return 0
 
 def cmp_wm(wm, test):
-	a=80
-	test=wm[a:]
+	# a=80
+	# test=wm[a:]
 	#输入位数<128
 	lent=len(test)#eg.63
 	a=math.floor(math.log(lent,2))#向下取整
@@ -80,7 +80,7 @@ def xor_bin(str1, str2):
 				count += 1
 		return count/len(str1)
 	else:
-		return 100000
+		return 1000
 
 
 def cmp_wm_t(wm, test):
@@ -94,14 +94,20 @@ def cmp_wm_t(wm, test):
 	if len_w <= len_t:
 		for j in range(0, len_t-128):
 			for i in range(0, len_w - 1):
-				m = xor_bin(wm2[i:i+127], test[j:j+127])
+				m = xor_bin(wm2[i:i+128], test[j:j+128])
 				if m >= n:
 					n = m
 			if n >= p:
 				p = n
 		return p
 	else:
-		result = cmp_wm(wm, test)
+		for i in range(0, len_w-1):
+			n = xor_bin(wm2[i:(i+len_t)], test)
+			if n >= p:
+				p = n	
+		result1 = p
+		result2 = cmp_wm(wm, test)
+		result = max(result1, result2)
 		return result
 
 

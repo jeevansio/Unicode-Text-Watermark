@@ -228,7 +228,7 @@ def main():
             wm = str2bin(wm)
             wm2 = wm + wm
             for i in range(0, 127):
-                a = watermark_extracted.find(wm2[i:(i+127)])
+                a = watermark_extracted.find(wm2[i:(i+128)])
                 if a != -1:
                     break
             if a == -1:
