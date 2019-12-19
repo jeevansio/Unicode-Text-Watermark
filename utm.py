@@ -12,7 +12,7 @@ import getopt
 import hmac
 
 from functools import reduce
-from eva import cmp_wm
+from eva import cmp_wm_t
 
 embedment = 0
 extraction = 0
@@ -234,12 +234,12 @@ def main():
             if a == -1:
                 print(watermark_extracted)
                 print(wm)
-                result = cmp_wm(wm, watermark_extracted)
+                result = cmp_wm_t(wm, watermark_extracted)
             else:
                 print(watermark_extracted)
                 print(wm)
                 result = 1
-            print("similarity: %d%%" %(result*100))
+            print("similarity: %.2f%%" %(result*100))
         else:
             print(watermark_extracted)
         # bitstram to hash

@@ -72,6 +72,37 @@ def cmp_wm(wm, test):
 	#print('count_sum=%d'%(count_sum))
 	return result
 
+def xor_bin(str1, str2):
+	count = 0
+	if len(str1) == len(str2):
+		for i in range(0, len(str1)-1):
+			if str1[i] == str2[i]:
+				count += 1
+		return count/len(str1)
+	else:
+		return 100000
+
+
+def cmp_wm_t(wm, test):
+	len_w = len(wm)
+	len_t = len(test)
+	wm2 = wm + wm
+	p = 0
+	m = 0
+	n = 0
+	print("oooo")
+	if len_w <= len_t:
+		for j in range(0, len_t-128):
+			for i in range(0, len_w - 1):
+				m = xor_bin(wm2[i:i+127], test[j:j+127])
+				if m >= n:
+					n = m
+			if n >= p:
+				p = n
+		return p
+	else:
+		result = cmp_wm(wm, test)
+		return result
 
 
 
